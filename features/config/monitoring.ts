@@ -109,4 +109,3 @@ async function toSerializable(h: JSHandle) {
     }
   }
 }
-``;
