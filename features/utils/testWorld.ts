@@ -1,9 +1,9 @@
-import { setWorldConstructor, World } from "@cucumber/cucumber";
-import type { Browser, BrowserContext, Page } from "playwright";
-import { PageFactory } from "./pageFactory";
-import { UIActions } from "./uiActions";
-import type HomePage from "../pages/homepage";
-import { enableMonitoring } from '../config/monitoring'
+import { setWorldConstructor, World } from '@cucumber/cucumber';
+import type { Browser, BrowserContext, Page } from 'playwright';
+import type { PageFactory } from './pageFactory';
+import type { UIActions } from './uiActions';
+import type HomePage from '../pages/homepage';
+import { enableMonitoring } from '../config/monitoring';
 
 export class TestWorld extends World {
   // Playwright handles (per scenario)
@@ -18,7 +18,6 @@ export class TestWorld extends World {
   // Cached instances for short getters
   private _home?: HomePage;
 
-  
   constructor(options: any) {
     super(options);
   }
@@ -29,7 +28,6 @@ export class TestWorld extends World {
     }
     return this._home;
   }
-
 }
 
 setWorldConstructor(TestWorld);

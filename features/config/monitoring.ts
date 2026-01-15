@@ -1,12 +1,11 @@
-
 // monitoring.ts
-import { Page, Response, JSHandle } from 'playwright';
+import type { Page, JSHandle } from 'playwright';
+import { Response } from 'playwright';
 
 export function enableMonitoring(page: Page, attach: (data: any, type: string) => Promise<void>) {
   const out = async (label: string, payload: unknown) => {
     const text = formatPayload(payload);
-    console.log(`[monitor] ${label} ${text}`);   // terminal visibility
-
+    console.log(`[monitor] ${label} ${text}`); // terminal visibility
   };
 
   // --- Console messages (serialize args!) ---
@@ -27,7 +26,9 @@ export function enableMonitoring(page: Page, attach: (data: any, type: string) =
   // --- Requests (method/url + headers + body preview) ---
   page.on('request', async (req) => {
     let headers: Record<string, string> | undefined;
-    try { headers = await req.allHeaders(); } catch {}
+    try {
+      headers = await req.allHeaders();
+    } catch {}
     const postData = req.postData();
     const postPreview = postData ? truncate(postData, 2000) : undefined;
 
@@ -35,7 +36,7 @@ export function enableMonitoring(page: Page, attach: (data: any, type: string) =
       method: req.method(),
       url: req.url(),
       headers,
-      bodyPreview: postPreview
+      bodyPreview: postPreview,
     });
   });
 
@@ -59,7 +60,7 @@ export function enableMonitoring(page: Page, attach: (data: any, type: string) =
       status: res.status(),
       url: res.url(),
       headers: res.headers(),
-      bodyPreview
+      bodyPreview,
     });
   });
 }
@@ -80,7 +81,11 @@ function truncate(s: string, max: number) {
 }
 
 function prettyJson(text: string) {
-  try { return JSON.stringify(JSON.parse(text), null, 2); } catch { return text; }
+  try {
+    return JSON.stringify(JSON.parse(text), null, 2);
+  } catch {
+    return text;
+  }
 }
 
 async function toSerializable(h: JSHandle) {
@@ -92,7 +97,11 @@ async function toSerializable(h: JSHandle) {
   } catch {
     try {
       const s = await h.evaluate((x) => {
-        try { return JSON.stringify(x); } catch { return String(x); }
+        try {
+          return JSON.stringify(x);
+        } catch {
+          return String(x);
+        }
       });
       return s;
     } catch {
@@ -100,4 +109,4 @@ async function toSerializable(h: JSHandle) {
     }
   }
 }
-``
+``;

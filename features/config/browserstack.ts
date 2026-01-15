@@ -1,18 +1,19 @@
-
 import { chromium } from 'playwright';
 import { execSync } from 'child_process';
 
-type BuildCapsInput = {
+interface BuildCapsInput {
   parameters?: Record<string, any>;
   env: NodeJS.ProcessEnv;
   appEnv: string;
-};
+}
 
 export function buildBrowserStackCaps({ parameters, env, appEnv }: BuildCapsInput) {
   const bsUser = env.BROWSERSTACK_USERNAME;
-  const bsKey  = env.BROWSERSTACK_ACCESS_KEY;
+  const bsKey = env.BROWSERSTACK_ACCESS_KEY;
   if (!bsUser || !bsKey) {
-    throw new Error('Missing BrowserStack credentials. Set BROWSERSTACK_USERNAME and BROWSERSTACK_ACCESS_KEY.');
+    throw new Error(
+      'Missing BrowserStack credentials. Set BROWSERSTACK_USERNAME and BROWSERSTACK_ACCESS_KEY.',
+    );
   }
 
   const clientPlaywrightVersion = execSync('npx playwright --version')
@@ -20,15 +21,15 @@ export function buildBrowserStackCaps({ parameters, env, appEnv }: BuildCapsInpu
     .trim()
     .split(' ')[1];
 
-  const bsBrowser       = parameters?.bsBrowser       || env.BS_BROWSER        || 'chrome';
-  const bsOS            = parameters?.bsOS            || env.BS_OS             || 'Windows';
-  const bsOSVersion     = parameters?.bsOSVersion     || env.BS_OS_VERSION     || '11';
-  const bsBrowserVersion= parameters?.bsBrowserVersion|| env.BS_BROWSER_VERSION|| 'latest';
+  const bsBrowser = parameters?.bsBrowser || env.BS_BROWSER || 'chrome';
+  const bsOS = parameters?.bsOS || env.BS_OS || 'Windows';
+  const bsOSVersion = parameters?.bsOSVersion || env.BS_OS_VERSION || '11';
+  const bsBrowserVersion = parameters?.bsBrowserVersion || env.BS_BROWSER_VERSION || 'latest';
 
   return {
     os: bsOS,
     os_version: bsOSVersion,
-    browser: bsBrowser,                      // 'chrome' or 'edge' (branded)
+    browser: bsBrowser, // 'chrome' or 'edge' (branded)
     browser_version: bsBrowserVersion,
     'browserstack.username': bsUser,
     'browserstack.accessKey': bsKey,
@@ -48,8 +49,7 @@ export function buildBrowserStackCaps({ parameters, env, appEnv }: BuildCapsInpu
 }
 
 export async function connectBrowserStack(caps: Record<string, any>) {
-  const wsEndpoint =
-    `wss://cdp.browserstack.com/playwright?caps=${encodeURIComponent(JSON.stringify(caps))}`;
+  const wsEndpoint = `wss://cdp.browserstack.com/playwright?caps=${encodeURIComponent(JSON.stringify(caps))}`;
   // Playwright engine connects via Chromium to BrowserStack’s WS endpoint
   return chromium.connect(wsEndpoint);
 }
