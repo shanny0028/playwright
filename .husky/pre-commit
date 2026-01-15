@@ -1,0 +1,14 @@
+mkdir -p .husky
+cat > .husky/pre-commit <<'SH'
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Run lint-staged on staged files (ESLint + Prettier)
+npx lint-staged
+SH
+
+chmod +x .husky/pre-commit
+
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+npx lint-staged

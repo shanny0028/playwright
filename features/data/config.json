@@ -1,0 +1,13 @@
+{
+  "common": {
+    "username":"abcd"
+  },
+  "tst": {
+    "url": "https://www.lambdatest.com/learning-hub/playwright-page-object-model",
+    "environment":"tst"
+  },
+  "sta":{
+    "url": "https://www.lambdatest.com/learning-hub/playwright-page-object-model",
+    "environment":"sta"
+  }
+}

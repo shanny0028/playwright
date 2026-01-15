@@ -1,0 +1,11 @@
+{
+  "loginLink": {
+    "locatorOptions": {},
+     "locator": "role=link[name='Login']",
+    "description": "Login link",
+    "actionOptions": {
+      "timeout": 5000
+    }
+  },
+  "homePageHeader": "xpath=//a[@aria-label='LambdaTest']"
+}
