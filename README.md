@@ -26,13 +26,10 @@ npx playwright install
 ### Basic Execution
 
 ```bash
-# Run tests with environment and tag
+# Run tests in Chrome with environment and tag
 ENV=TST npm run local @testTag
 
-# Run in Chrome browser
-ENV=TST npm run local @testTag
-
-# Run in Edge browser
+# Run tests in Edge with environment and tag
 ENV=STA npm run local_edge @testTag
 ```
 
@@ -43,7 +40,7 @@ ENV=STA npm run local_edge @testTag
 ### Browser Profiles
 - `npm run local` - Chrome browser
 - `npm run local_edge` - Edge browser
-- `cucumber-js -p firefox` - Firefox browser
+- Firefox: `ENV=TST cucumber-js -p firefox --tags @testTag`
 
 ### Using Tags
 ```bash
